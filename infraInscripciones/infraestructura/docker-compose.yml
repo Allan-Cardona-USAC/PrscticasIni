@@ -1,0 +1,60 @@
+version: '3.3'
+
+services:
+  produccion:
+    container_name: produccion
+    build: 
+      context: ./apache
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - ../produccion:/var/www/html
+
+  db_inscripcion:
+    container_name: db_inscripcion
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: '123456'
+    ports:
+      - "3308:3306"
+    volumes:
+      - type: bind
+        source: ./data
+        target: /var/lib/mysql
+
+  db_encuesta:
+    container_name: db_encuesta
+    image: postgres
+    restart: always
+    environment: 
+      POSTGRES_PASSWORD: '123456'
+    ports:
+      - "5432:5432"
+    volumes:
+      - type: bind
+        source: ./encuesta
+        target: /var/lib/postgresql/data
+
+  primeringreso:
+    container_name: primeringreso
+    build: 
+      context: ./primeringreso
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ../primeringreso:/var/www/html
+
+<VirtualHost *:80>
+    DocumentRoot /var/www/html/rye-portal/public
+
+    <Directory "/var/www/html/rye-portal/public">
+        AllowOverride all
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
