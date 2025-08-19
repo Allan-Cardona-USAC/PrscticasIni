@@ -1,0 +1,18 @@
+ul.nav li a.nav-link {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+ul.nav li a.nav-link:hover, ul.nav li a.nav-link:focus {
+    color: #fff;
+}
+
+ul.nav li a.nav-link.disabled {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+ul.nav li a .show > .nav-link,
+ul.nav li a .active > .nav-link,
+ul.nav li a .nav-link.show,
+ul.nav li a .nav-link.active {
+    color: #fff;
+}

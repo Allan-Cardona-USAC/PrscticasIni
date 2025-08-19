@@ -1,0 +1,73 @@
+{
+  "fields": [
+    {
+      "name": "codigo_unidad_academica",
+      "type": "number"
+    },
+    {
+      "name": "codigo_extension",
+      "type": "number"
+    },
+    {
+      "name": "nombre",
+      "type": "text"
+    },
+    {
+      "name": "fecha_creacion",
+      "type": "date"
+    },
+    {
+      "name": "usuario",
+      "type": "text"
+    },
+    {
+      "name": "fecha_u",
+      "type": "datetime"
+    },
+    {
+      "name": "activa",
+      "type": "number"
+    }
+  ],
+  "foreign_keys": [
+    {
+      "column": "codigo_unidad_academica",
+      "references": "codfac",
+      "on": "facultad",
+      "onDelete": "no action"
+    }
+  ],
+  "relationships": [
+    {
+      "name": "facultad",
+      "type": "belongsTo",
+      "class": "App\\PortalAdministrativo\\facultad"
+    }
+  ],
+  "validations": [
+    {
+      "field": "codigo_unidad_academica",
+      "rules": "required|integer"
+    },
+    {
+      "field": "codigo_extension",
+      "rules": "required|integer"
+    },
+    {
+      "field": "nombre",
+      "rules": "nullable|max:250"
+    },
+    {
+      "field": "fecha_creacion",
+      "rules": "required"
+    },
+    {
+      "field": "usuario",
+      "rules": "required|max:30"
+    },
+    {
+      "field": "activa",
+      "rules": "integer"
+    }
+  ]
+}

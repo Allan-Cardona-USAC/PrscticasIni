@@ -1,0 +1,49 @@
+@charset "utf-8";
+@page {
+    size: 8.5in	5.5in;
+    margin: 0;
+}
+
+@media print {
+    table {
+        background: url('../img/fondoLogoUSAC.png') no-repeat;
+        -webkit-print-color-adjust: exact;
+    }
+}
+
+table {
+    background: url('../img/LogoUSAC2.jpg') no-repeat;
+    background-size: 325px;
+    border: 2px solid black;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    margin: auto;
+    margin-top: 25px;
+    font-size: 18px;
+    background-position: center;
+}
+
+td, th{
+    padding-bottom: 1px;
+    padding-top: 0px;
+}
+
+.titulo {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 12pt;
+    padding-top: 2px;
+    padding-bottom: 10px;
+}
+
+.titulo-seccion{
+    text-align: right;
+    padding-right: 15px;
+    width: 385px;
+}
+
+.informacion{
+    text-align: center;
+    font-size: 10px;
+}

@@ -1,0 +1,680 @@
+Registro Inscripcion
+1. Solicitud de Ingreso
+	|1.1| 	https://registro.usac.edu.gt/index.php?ping=0#
+		|1.1.1|	Ingresar Nov y Pin
+	|1.2|	Seleccionar Extension
+		|1.2.1|	Seleccionar Unidad Academica (Alli se valida los PCB)
+		|1.2.2|	Seleccionar Carrera
+	|1.3|	Ingresar datos personales
+		|1.3.1|	Nombres, Telefonos, Ciudad Nacimiento etc.
+	|1.4|	Ingresar datos de Carrera (Nivel medio)
+	|1.5|	Generar Constancia Pre inscripcion
+
+2. Generar Boleta-Inscripcion
+	|2.1|	Ingresar a https://registro.usac.edu.gt/inscripcionenlinea/
+		|2.1.2|	Ingresar Pin y  NOV
+		|2.1.3|	Cargar foto  .jpg  "../images/Carne"
+		|2.1.4|	Cargar Certificado .PDF  "../images/Carne/certificados"
+		|2.1.5|	Ingresar CUI
+		|2.1.6|	Ingresar Registro de titulo
+		|2.1.7|	El sistema Valida PCB y PE
+		|2.1.8|	El sistema devuelve datos del aspirante
+		|2.1.9|	Genera boleta
+		|2.1.10|  Pagar la boleta
+3.  Inscripcion automatica.
+4. Solicitar constancia de inscripcion
+
+
+ 1. Portal Registro
+Logueo por primera vez
+Envia link al correo (No verifica correo)
+Verificar correo
+  Ingresar Nov, Nombre completo, correo
+FASE 1
+	Verificar Datos del estudiante
+	Actualizar. Ingresar nit, y otro datos.
+El sistema crea el expediente
+Elegir la Extension
+Elegir Facultad
+Elegir Carrera
+FASE 2
+	Carga de Documentos
+		Carga de fotografia
+		Carga de Certificado
+		Subir pasaporte
+		Ce
+	LLenar encuesta
+	Informacion de donde estudio
+FASE 3
+	Validar datos de la orden de pago
+	Generar orden de pago
+Sistema asigna carnet
+
+
+
+---------------------------------------------
+   <a class="btn btn-link" href="{{ route('aspirante.password.request') }}">
+                    {{ __('¿Olvidaste tu contraseña?') }}
+                </a>
+URL :   http://localhost:8080/rye-portal/public/aspirante/password/reset
+ views/aspirante/auth/password/email.blade.php
+---------------------------------------------------
+<form method="POST" action="{{ route('aspirante.password.email') }}" aria-label="{{ __('Recuperar contraseña') }}">
+ <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4 text-center">
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    {{ __('Enviar link de recuperación') }}
+                                </button>
+                            </div>
+public function showLinkRequestForm()
+    {
+        $title = 'Recuperar contraseña';
+        return view('aspirante.auth.passwords.email', compact('title'));
+    }
+    ACA se maneja aspirante/password.email
+      Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('aspirante.password.email');
+ForgotPasswordController
+----------------------------------------------------------
+ <a class="btn btn-link" href="{{ route('aspirante.email.request') }}">
+                                    {{ __('¿Deseas registrar un correo diferente o reenviar el correo de confirmación?') }}
+                                </a>
+                            <div class="col-md-6 offset-md-1">
+                                <a class="btn btn-link" href="{{ route('aspirante.email.request') }}">
+                                    {{ __('¿Deseas registrar un correo diferente o reenviar el correo de confirmación?') }}
+                                </a>
+                        </div>
+
+ Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('aspirante.password.request');
+ ESte va aAAAAAAAAAAAA
+Route::get('email/reset', 'Auth\ForgotEmailController@showLinkRequestForm')->name('aspirante.email.request');
+/RUTA/ app/http/controllers/aspirante/auth/ForgotEmailController.php
+METODO:
+public function showLinkRequestForm()
+    {
+        $title = 'Recuperar correo';
+        return view('aspirante.auth.resetemail', compact('title'));
+    }
+
+    VISTA: Views/aspirante/auth/resetemail.blade.php
+    Esta ruta oute('aspirante.email.change')
+    realiza el cambio de email. verificarlo :P
+este va a route aspirante  /// RegisterController
+   Route::post('email/reset', 'Auth\RegisterController@changeEmail')->name('aspirante.email.change');
+
+    Analizar c0omo lo hace
+    o bien buscar el codigo de enviar link de recuperacion de admin, analizarlo y pegarlo
+
+
+
+    ---------------------Actualizar correo y que envie de una vez ---------------------------------
+    public function changeEmail(Request $request)
+    {
+        $nov = $request->nov;
+        $fecha = $request->fecha;
+        $correo = $request->correo;
+
+        $usuario = Aspirante::where(['nov'=>$nov, 'fecha_nacimiento'=>$fecha])->first();
+
+        // verifica que la combinación nov-fecha exista
+        if($usuario)
+        {
+            if($this->validateName($usuario, $nombre))
+            {
+                $last_recovery = ($usuario->last_email_recovery == NULL ? 3600 : (time() - strtotime($usuario->last_email_recovery)));
+                //Se recupera cada hora
+                //3600 segundos = 1 hora
+                if($last_recovery > 3600)
+                {
+                    //if($usuario->last_email_recovery == NULL || $usuario->last_email_recovery == )
+                    $aspirante = Aspirante::where(['nov'=>$nov, 'fecha_nacimiento'=>$fecha])->update(
+                        [
+                            'verification_state'=>'0',
+                            'verification_token'=>Str::random(40),
+                            'correo_electronico'=>$correo,
+                            'last_email_recovery'=> now()
+                        ]
+                    );
+                    $usuario = Aspirante::where(['nov'=>$nov, 'fecha_nacimiento'=>$fecha])->first();
+                    $this->sendEmailVerification($usuario);
+
+                    $masked = $this->maskEmail($correo);
+                    $title = 'Verificación de Correo Electrónico';
+
+                    return view('aspirante.emailVerification',compact('title','masked'));
+                }
+
+                $title = 'Verificación de Correo Electrónico';
+                $titulo = 'Error en la recuperación';
+                $mensaje = 'Únicamente se puede hacer una recuperación de correo electrónico por día.';
+                return view('aspirante.informacion',compact('titulo','mensaje','title'));
+            }
+        }
+
+        $title = 'Verificación de Correo Electrónico';
+        $titulo = 'Error en la recuperación';
+        $mensaje = 'Los datos no concuerdan. Inténtalo de nuevo.';
+        return view('aspirante.informacion',compact('titulo','mensaje','title'));
+    }
+
+  public function sendResetLinkEmail(Request $request)
+    {
+        $this->validateEmail($request);
+
+        // We will send the password reset link to this user. Once we have attempted
+        // to send the link, we will examine the response then see the message we
+        // need to show to the user. Finally, we'll send out a proper response.
+        $response = $this->broker()->sendResetLink(
+            $request->only('nov')
+        );
+
+        return $response == Password::RESET_LINK_SENT
+                    ? $this->sendResetLinkResponse($request, $response)
+                    : $this->sendResetLinkFailedResponse($request, $response);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+CLLASE----------------
+<?php
+
+namespace App\Http\Controllers\Aspirante\Auth;
+
+use App\Aspirante;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Mail\AspiranteVerifyEmail;
+use Mail;
+
+class ForgotPasswordController extends Controller
+{
+    /*
+    |--------------------------------------------------------------------------
+    | Password Reset Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling password reset emails and
+    | includes a trait which assists in sending these notifications from
+    | your application to your users. Feel free to explore this trait.
+    |
+    */
+
+    use SendsPasswordResetEmails;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('aspirante.guest:aspirante');
+    }
+
+    /**
+     * Display the form to request a password reset link.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLinkRequestForm()
+    {
+        $title = 'Recuperar contraseña';
+        return view('aspirante.auth.passwords.email', compact('title'));
+    }
+
+    /**
+     * Send a reset link to the given user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    public function sendResetLinkEmail(Request $request)
+    {
+        // ----------------------------
+        $nov = $request->nov;
+        $fecha = $request->fecha;
+        $correo = $request->correo;
+
+        $usuario = Aspirante::where(['nov'=>$nov, 'fecha_nacimiento'=>$fecha])->first();
+        if($usuario)
+        {
+                $last_recovery = ($usuario->last_email_recovery == NULL ? 3600 : (time() - strtotime($usuario->last_email_recovery)));
+
+                    $aspirante = Aspirante::where(['nov'=>$nov, 'fecha_nacimiento'=>$fecha])->update(
+                        [
+                            'verification_state'=>'0',
+                            'verification_token'=>Str::random(40),
+                            'correo_electronico'=>$correo,
+                            'last_email_recovery'=> now()
+                        ]
+                    );
+                    $usuario = Aspirante::where(['nov'=>$nov, 'fecha_nacimiento'=>$fecha])->first();
+                    $this->sendEmailVerification($usuario);
+
+                    $masked = $this->maskEmail($correo);
+                    $title = 'Verificación de Correo Electrónico';
+
+                    //return view('aspirante.emailVerification',compact('title','masked'));
+
+            /*
+                $title = 'Verificación de Correo Electrónico';
+                $titulo = 'Error en la recuperación';
+
+               /// return view('aspirante.informacion',compact('titulo','mensaje','title')); */
+                $this->validateEmail($request);
+
+        // We will send the password reset link to this user. Once we have attempted
+        // to send the link, we will examine the response then see the message we
+        // need to show to the user. Finally, we'll send out a proper response.
+       $response = $this->broker()->sendResetLink(
+            $request->only('nov')
+        );
+
+        return $response == Password::RESET_LINK_SENT
+                    ? $this->sendResetLinkResponse($request, $response)
+                    : $this->sendResetLinkFailedResponse($request, $response);
+
+        }
+
+       /* $title = 'Verificación de Correo Electrónico';
+        $titulo = 'Error en la recuperación';
+        $mensaje = 'Los datos no concuerdan. Inténtalo de nuevo.';*/
+      //  return view('aspirante.informacion',compact('titulo','mensaje','title'));
+
+
+        // -------------------------------
+
+    }
+
+ public function sendEmailVerification($user)
+    {
+        Mail::to($user['correo_electronico'])->send(new AspiranteVerifyEmail($user));
+    }
+
+    public function maskEmail($correo)
+    {
+        $size = strlen($correo);
+        $arroba = strpos($correo, '@');
+        for ($n=$arroba-2; $n>2; $n--) {
+            $correo = substr_replace($correo, '*', $n, 1);
+        }
+        return $correo;
+    }
+
+
+
+    /**
+     * Validate the email for the given request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    protected function validateEmail(Request $request)
+    {
+        $request->validate(['nov' => 'required|string']);
+    }
+
+    /**
+     * Get the response for a failed password reset link.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    protected function sendResetLinkFailedResponse(Request $request, $response)
+    {
+        return back()
+                ->withInput($request->only('nov'))
+                ->withErrors(['nov' => trans($response)]);
+    }
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    public function broker()
+    {
+        return Password::broker('aspirantes');
+    }
+
+}
+
+
+
+http://registro.usac.edu.gt/WSping/especificasTodas.php?wsdl
+https://registro.usac.edu.gt/WSping/especificasSoloCarrera.php?wsdl'
+
+public function consultarPruebaBasicasWSSUN($nov)
+    {
+        $client = new Client();
+        $url = "https://resultadospcbws.usac.edu.gt/resultados";
+
+        try {
+            /*
+             * Se obtiene respuesta de WS
+             * de SUN.
+             * */
+            $response = $client->post($url,
+                [
+                    'auth' => ['RegistroyEstadistica18', '@JELV0685'],
+                    'json' => [
+                        'nov' => strval($nov)
+                    ]
+                ]);
+
+            $statuscode = $response->getStatusCode();
+
+            if ($statuscode === 200) {
+                $body = $response->getBody();
+                $aspiranteSUN= json_decode($body,true);
+
+
+                return $aspiranteSUN['aprobados'];
+            } else {
+
+            }
+        }catch (Exception $ex) {
+
+            /*
+             * No sé obtuvieron valores de WS del SUN
+             * por se carnet muy antiguo
+             * por lo cual se procede a obtener
+             * valore de tabla pcb_carrera
+             * */
+
+            $pruebas = array();
+            $pcbs = pcb::select('id_prueba')->where('nov',$nov)->get();
+            foreach($pcbs as $pcb)
+            {
+
+                if($pcb['id_prueba'] == '1')
+                {
+                    $pruebas[] = 'Biologia';
+                }
+                else if($pcb['id_prueba'] == '2')
+                {
+                    $pruebas[] = 'Física';
+                }
+                else if($pcb['id_prueba'] == '3')
+                {
+                    $pruebas[] = 'Lenguaje';
+                }
+                else if($pcb['id_prueba'] == '4')
+                {
+                    $pruebas[] = 'Matemática';
+                }
+                else if($pcb['id_prueba'] == '5')
+                {
+                    $pruebas[] = 'Química';
+                }
+            }
+            return $pruebas;
+        }
+    }
+
+
+    /*************************************************************/
+    Route::get('inscripcion', 'Inscripcion@index')->name('aspirante.fase1');
+    Route::post('insertarDatos', 'Inscripcion@insertarDatos')->name('aspirante.fase1.paso1');
+    Route::post('registrarCarrera', 'Inscripcion@registrarCarrera')->name('aspirante.fase1.paso5');
+
+    // Fase 2 - Papeleria para el expediente
+    Route::get('inscripcion2', 'Inscripcion@fase2')->name('aspirante.fase2');
+    Route::post('subirFoto', 'Inscripcion@subirFoto')->name('aspirante.fase2.subirFoto');
+    Route::post('subirCertificado', 'Inscripcion@subirCertificado')->name('aspirante.fase2.subirCertificado');
+    Route::post('subirPasaporte', 'Inscripcion@subirPasaporte')->name('aspirante.fase2.subirPasaporte');
+    Route::post('subirCertificacionNacimientoExtranjero', 'Inscripcion@subirCertificacionNacimientoExtranjero')->name('aspirante.fase2.subirCertificacionNacimientoExtranjero');
+    Route::post('validarIdentificacion', 'Inscripcion@validarIdentificacion')->name('aspirante.fase2.paso5');
+
+    Route::post('getDatosMINEDUC', 'Inscripcion@getDatosMineducPost')->name('aspirante.fase2.getDatosMINEDUC');
+    Route::post('subirTitulo', 'Inscripcion@subirTitulo')->name('aspirante.fase2.subirTitulo');
+    Route::post('subirCierrePensum', 'Inscripcion@subirCierrePensum')->name('aspirante.fase2.subirCierrePensum');
+    Route::post('subirResolucion', 'Inscripcion@subirResolucion')->name('aspirante.fase2.subirResolucion');
+    Route::post('subirTituloApostillado', 'Inscripcion@subirTituloApostillado')->name('aspirante.fase2.subirTituloApostillado');
+    Route::post('subirCertificadoGeneralEstudios', 'Inscripcion@subirCertificadoGeneralEstudios')->name('aspirante.fase2.subirCertificadoGeneralEstudios');
+
+
+            {{-- Dependiendo de la nacionalidad muestra ciertos campos --}}
+            $('#inputNacionalidad').on('change', function () {
+                var nacionalidad = $(this).val();
+                $("div.ocultarDiv").hide();
+                if (nacionalidad == 30){ {{-- 30 = código de guatemala --}}
+                    $('#cui').show();
+                    $('#pasaporte').hide();
+                    $('#autoAdscripcionEtnicaEtnia').show();
+                    $('#autoAdscripcionEtnicaIdiomaGuatemalteco').show();
+                } else {
+                    $('#pasaporte').show();
+                    $('#cui').hide();
+                    $('#autoAdscripcionEtnicaEtnia').hide();
+                    $('#autoAdscripcionEtnicaIdiomaGuatemalteco').hide();
+                }
+            });
+
+            {{-- Obtiene los Municipios del Departamento seleccionado --}}
+            $("#inputDepartamento").on('change', function(){
+                var idDepartamento = $(this).val();
+                if(idDepartamento) {
+                    $.ajax({
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        url: "{{ url('/municipios/get/') }}",
+                        type:"GET",
+                        dataType:"json",
+                        data: {
+                            departamento: idDepartamento
+                        },
+                        success:function(data) {
+                            $("#inputMunicipio").empty();
+                            $.each(data, function(key, value){
+                                $("#inputMunicipio").append('<option value="'+ key +'">' + value + '</option>');
+                            });
+                        }
+                    });
+                }
+            });
+
+            {{-- Obtiene los Códigos Postales del Municipio seleccionado --}}
+            $("#inputMunicipio").on('change', function(){
+                var idMunicipio = $(this).val();
+                var input = document.getElementById("inputDepartamento");
+                var idDepartamento = input.options[input.selectedIndex].value;
+                if(idMunicipio) {
+                    $.ajax({
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        url: "{{ url('/codigosPostales/get/') }}",
+                        type:"GET",
+                        dataType:"json",
+                        data: {
+                            departamento: idDepartamento,
+                            municipio: idMunicipio
+                        },
+                        success:function(data) {
+                            $("#inputCodigoPostal").empty();
+                            $.each(data, function(key, value){
+                                $("#inputCodigoPostal").append('<option value="'+ key +'">' + value + '</option>');
+                            });
+                        }
+                    });
+                }
+            });
+
+            {{-- Dependiendo del pais de nacimiento muestra ciertos campos --}}
+            $('#inputLugarNacimientoPais').on('change', function () {
+                var pais = $(this).val();
+                $("div.ocultarDiv").hide();
+                if (pais == 30){ {{-- 30 = código de guatemala --}}
+                    $('#inputLugarNacimientoDepartamento').show();
+                    $('#inputLugarNacimientoMunicipio').show();
+                } else {
+                    $('#inputLugarNacimientoDepartamento').hide();
+                    $('#inputLugarNacimientoMunicipio').hide();
+                }
+            });
+
+            {{-- Obtiene los Municipios del Departamento seleccionado para el lugar de nacimiento--}}
+            $("#inputLugarNacimientoDepartamento").on('change', function(){
+                var idDepartamento = $(this).val();
+                if(idDepartamento) {
+                    $.ajax({
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        url: "{{ url('/municipios/get/') }}",
+                        type:"GET",
+                        dataType:"json",
+                        data: {
+                            departamento: idDepartamento
+                        },
+                        success:function(data) {
+                            $("#inputLugarNacimientoMunicipio").empty();
+                            $.each(data, function(key, value){
+                                $("#inputLugarNacimientoMunicipio").append('<option value="'+ key +'">' + value + '</option>');
+                            });
+                        }
+                    });
+                }
+            });
+
+            {{-- Obtiene los Municipios del Departamento seleccionado --}}
+            $("#inputNacionalidad").on('change', function(){
+                var idNacionalidad = $(this).val();
+                if(idNacionalidad) {
+                    $.ajax({
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        url: "{{ url('/valorMatricula/get/') }}",
+                        type:"GET",
+                        dataType:"json",
+                        data: {
+                            idNacionalidad: idNacionalidad
+                        },
+                        success:function(data) {
+                            $("#inputMatricula").empty().val('Q' + data + '.00');
+                        }
+                    });
+                }
+            });
+
+
+
+function paso1(){
+
+            {{-- Datos personales --}}
+            var nov = $('#inputNOV').val();
+            var primerApellido = $('#inputApellido1').val();
+            var segundoApellido = $('#inputApellido2').val();
+            var primerNombre = $('#inputNombre1').val();
+            var segundoNombre = $('#inputNombre2').val();
+            var nombre = $('#inputNombre3').val();
+            var sexo = document.getElementById("inputSexo");
+            sexo = sexo.options[sexo.selectedIndex].value;
+            var fechaNacimiento = $('#inputFechaNacimiento').val();
+
+            {{-- Datos de contacto --}}
+            var direccion = $('#inputDireccion').val();
+            var departamento = document.getElementById("inputDepartamento");
+            departamento = departamento.options[departamento.selectedIndex].value;
+            var municipio = document.getElementById("inputMunicipio");
+            municipio = municipio.options[municipio.selectedIndex].value;
+            var codigoPostal = document.getElementById("inputCodigoPostal");
+            codigoPostal = codigoPostal.options[codigoPostal.selectedIndex].value;
+            var telefono = $('#inputTelefono').val();
+            var celular = $('#inputCelular').val();
+            var email = $('#inputEmail').val();
+            var nit = $('#inputNIT').val();
+
+            {{-- Lugar de Nacimiento --}}
+            var lugarNacimientoPais = document.getElementById("inputLugarNacimientoPais");
+            lugarNacimientoPais = lugarNacimientoPais.options[lugarNacimientoPais.selectedIndex].value;
+            var lugarNacimientoDepartamento = document.getElementById("inputLugarNacimientoDepartamento");
+            lugarNacimientoDepartamento = lugarNacimientoDepartamento.options[lugarNacimientoDepartamento.selectedIndex].value;
+            var lugarNacimientoMunicipio = document.getElementById("inputLugarNacimientoMunicipio");
+            lugarNacimientoMunicipio = lugarNacimientoMunicipio.options[lugarNacimientoMunicipio.selectedIndex].value;
+
+            {{-- Nacionalidad y cui o pasaporte --}}
+            var nacionalidad = document.getElementById("inputNacionalidad");
+            nacionalidad = nacionalidad.options[nacionalidad.selectedIndex].value;
+            var numeroRegistro = 0;
+            if (nacionalidad == 30){
+                numeroRegistro = $('#inputCUI').val();
+            } else {
+                numeroRegistro = $('#inputPasaporte').val();
+            }
+
+                {{-- Autoadscripción Étnica --}}
+            var etnia = document.getElementById("inputEtnia");
+            etnia = etnia.options[etnia.selectedIndex].value;
+            var idiomaMaterno = document.getElementById("inputIdiomaMaterno");
+            idiomaMaterno = idiomaMaterno.options[idiomaMaterno.selectedIndex].value;
+            var idiomaGuatemalteco = document.getElementById("inputIdiomaGuatemalteco");
+            idiomaGuatemalteco = idiomaGuatemalteco.options[idiomaGuatemalteco.selectedIndex].value;
+            var idiomaNoGuatemalteco = $('#inputIdiomaNoGuatemalteco').val();
+
+            {{-- Inserta los datos en la tabla información_aspirante --}}
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: "{{ route('aspirante.fase1.paso1') }}",
+                type:"POST",
+                dataType:"JSON",
+                data: {
+                    nov: nov,
+                    apellido1: primerApellido,
+                    apellido2: segundoApellido,
+                    nombre1: primerNombre,
+                    nombre2: segundoNombre,
+                    otros_nombres: nombre,
+                    //direccion
+                    muni_recide: municipio,
+                    depto_recide: departamento,
+                    cod_Postal: codigoPostal,
+                    nacionalidad: nacionalidad,
+                    fecha_nacimiento: fechaNacimiento,
+                    correo_electronico: email,
+                    etnia: etnia,
+                    idioma_etnia: idiomaMaterno,
+                    idioma_gt: idiomaGuatemalteco,
+                    idioma_no_gt: idiomaNoGuatemalteco,
+                    sexo: sexo,
+                    telefono: telefono,
+                    celular: celular,
+                    numero_registro: numeroRegistro,
+                    pais_nac: lugarNacimientoPais,
+                    depto_nac: lugarNacimientoDepartamento,
+                    muni_nac: lugarNacimientoMunicipio,
+
+                    direccion: direccion,
+                    nit:nit
+                },
+                success:function(data) {
+                    //$('#flashMessage').html('');
+                    console.log(data);
+                    /*$('#flashMessage').append("<p class=\"alert alert-success\" >"+data+"\n" +
+                                                    "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
+                                                        "<span aria-hidden=\"true\">&times;</span>\n" +
+                                                    "</button>\n" +
+                                                    "</p>");*/
+                    $('#multistepform').smartWizard('nextStep');
+                },
+                error: function (data) {
+                    $('#flashMessage').html('');
+                    for(var indice in data.responseJSON ){
+                    $('#flashMessage').append("<p class=\"alert alert-danger\" >"+data.responseJSON[indice]+"\n" +
+                                                    "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
+                                                        "<span aria-hidden=\"true\">&times;</span>\n" +
+                                                    "</button>\n" +
+                                                "</p>");
+
+                    }
+                }
+            });
+        }

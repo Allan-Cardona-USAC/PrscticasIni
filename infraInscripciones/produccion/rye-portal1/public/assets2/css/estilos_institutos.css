@@ -1,0 +1,186 @@
+
+
+.flex{
+	width: 100%;
+	height:100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.textos{
+	padding:300px;
+	color:#fff;
+	text-align: center;
+}
+
+.modal{
+	display: none;
+	position: fixed;
+	z-index:1;
+	overflow: auto;
+	left: 0;
+	top:0;
+	width: 100%;
+	height:100%;
+	background: rgba(0, 0, 0, 0.452);
+}
+
+.contenido-modal{
+	position: relative;
+	background-color: #fefefe;
+	margin: auto;
+	width: 90%;
+	box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.4);
+	animation-name: modal;
+	animation-duration: 1s;
+}
+@keyframes modal{
+	from{top:-330px; opacity:0;}
+	to{top:0; opacity:1;}
+}
+.close{
+	color: #f2f2f2;
+	font-size:30px;
+	font-weight: bold;
+}
+.close:hover{
+	color:#7f8c8d;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.modal-header, .footer{
+	padding: 8px 16px;
+	background: #0F2949;
+	color:#f2f2f2;
+}
+
+p{
+	text-align: justify;
+}
+
+.modal-body{
+	padding: 20px 16px;
+	overflow: auto;
+}
+
+
+/* TABLA */
+
+table {
+	width: 90%;
+	border: 1px solid #A61700;
+ }
+  th, td {
+	/* width: 25%; */
+	text-align: left;
+	vertical-align: top;
+	border-collapse: collapse;
+	padding: 0.3em;
+	caption-side: bottom;
+	text-align: center;
+ }
+ th{
+	border: 1px solid white;
+ }
+ td{
+	border: 1px solid #A61700;
+ }
+ thead {
+	padding: 10%;
+	color: #fff;
+	background: #7F0020;
+ }
+ .verticalText {
+	/* writing-mode: vertical-lr;	 */
+	transform: rotate(-90deg);
+	margin-bottom: 40px;
+	/* margin-right: 150px; */
+}
+.segunda_fila{
+	position: relative;
+	height: 100px;
+}
+.minimizar{
+	text-align: center;
+}
+
+/* RESPONSIVE */
+@media screen and (max-width:900px){	
+	.contenido-modal{
+		width: 99%;
+	}
+	.textos{
+		padding: 150px;
+	}
+	.titulo_modal{
+		font-size: 160%;
+		text-align: center;
+	}
+	
+	table {
+		width: 100%;
+		border: 1px solid green;
+		font-size: 40%;
+		table-layout: fixed;
+	 }
+	.modal-body{
+		padding: 1px 1px;
+	}
+	table td {
+		height: 10px;
+	}
+	table th {
+		height: 10px;
+	}
+	th, td{
+		width: 80px;
+	}
+	.minimizar{
+		width: 40px;
+	}
+
+	.verticalText {
+		/* writing-mode: vertical-lr;	 */
+		transform: rotate(-90deg);
+		margin-bottom: -5px;
+		font-size: 5pt;
+		/* margin-right: 150px; */
+	}
+	.carrera{
+		width: 50px;
+	}
+	.segunda_fila{
+		position: relative;
+		height: 60px;
+	}
+
+	.primer{
+		width: 60px;
+	}
+	.ultimo{
+		width: 133px;
+	}
+	.penultimo{
+		width: 50px;
+	}
+
+/* 
+	.ua{
+		width: 60px;
+	} */
+}
+
+
+#sitio{
+	margin-left: 45%;
+}
+@media screen and (max-width:500px){
+	.textos{
+		padding:50px;
+	}
+	#sitio{
+		margin-left: 33%;
+	}
+}

@@ -1,0 +1,111 @@
+.bloque-1{
+    padding-left: 20%;
+    padding-right: 20%;    
+}
+
+.parrafo-1{
+    padding-left: 200px;
+    padding-right: 200px;
+}
+
+.fecha-1{
+    padding-left: 200px;
+    padding-right: 200px;
+}
+
+.barcode-1{
+    padding-left: 200px; 
+    padding-right: 50px;
+}
+
+.validator-1{
+    padding-left: 200px; padding-right: 50px; 
+    font-size: 12px; padding-top: 0px;margin-top: -10px;
+}
+
+.parrafo-0{
+    padding-left: 200px; padding-right: 200px;
+    font-size:16px; 
+}
+
+.table-1{
+    padding-left: 300px;
+}
+
+.table-2{
+    padding-right: 15px;
+}
+
+.table-3{
+    padding-left: 15px;
+}
+
+.table-4{
+    padding-right: 300px;
+}
+
+.parrafo-2{
+    padding-left: 200px; padding-right: 200px;
+}
+
+
+@media (min-width: 200px) and (max-width: 800px) {
+
+    .parrafo-1{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .fecha-1{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .bloque-1{
+        padding-left: 0%;
+        padding-right: 0%;    
+    }
+
+    .barcode-1{
+        padding-left: 0px; 
+        padding-right: 0px;
+    }
+    
+    .validator-1{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .parrafo-0{
+        padding-left: 0px; padding-right: 0px;
+        font-size:16px; 
+    }
+
+    .table-1{
+        padding-left: 0px;
+    }
+    
+    .table-2{
+        padding-right: 0px;
+    }
+
+    .table-3{
+        padding-left: 0px;
+    }
+    
+    .table-4{
+        padding-right: 0px;
+    }
+
+    .parrafo-2{
+        padding-left: 0px; padding-right: 0px;
+    }
+
+    .movil-1{
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+    .titulo-1{
+        font-size: 11px;
+    }
+}

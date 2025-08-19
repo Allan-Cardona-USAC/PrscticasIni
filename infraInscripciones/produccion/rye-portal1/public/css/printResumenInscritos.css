@@ -1,0 +1,20 @@
+@media print
+{
+
+    @page {
+        margin-top: 1.3cm;
+        size:landscape;
+    }
+
+    .col-md-4 {
+        width:30%; float:left;
+    }
+
+    th,td{
+        -webkit-print-color-adjust: exact !important;
+    }
+
+
+
+
+}

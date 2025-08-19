@@ -1,0 +1,117 @@
+{
+  "fields": [
+    {
+      "name": "tipo_ua",
+      "type": "number"
+    },
+    {
+      "name": "codfac",
+      "type": "number"
+    },
+    {
+      "name": "nomfac",
+      "type": "text"
+    },
+    {
+      "name": "nomcorto",
+      "type": "text"
+    },
+    {
+      "name": "correo",
+      "type": "email"
+    },
+    {
+      "name": "niv_tecnico",
+      "type": "number"
+    },
+    {
+      "name": "niv_licenciatura",
+      "type": "number"
+    },
+    {
+      "name": "niv_posgrado",
+      "type": "number"
+    },
+    {
+      "name": "depto",
+      "type": "number"
+    },
+    {
+      "name": "rangoCarnet",
+      "type": "number"
+    },
+    {
+      "name": "wsPruebaBasica",
+      "type": "text"
+    },
+    {
+      "name": "wsPruebaEspecifica",
+      "type": "text"
+    }
+  ],
+  "foreign_keys": [
+    {
+      "column": "tipo_ua",
+      "references": "tipo",
+      "on": "tipo_UA",
+      "onDelete": "no action"
+    }
+  ],
+  "relationships": [
+    {
+      "name": "tipo_UA",
+      "type": "belongsTo",
+      "class": "App\\PortalAdministrativo\\tipo_UA"
+    }
+  ],
+  "validations": [
+    {
+      "field": "tipo_ua",
+      "rules": "integer"
+    },
+    {
+      "field": "codfac",
+      "rules": "integer"
+    },
+    {
+      "field": "nomfac",
+      "rules": "max:100"
+    },
+    {
+      "field": "nomcorto",
+      "rules": "max:30"
+    },
+    {
+      "field": "correo",
+      "rules": "max:50"
+    },
+    {
+      "field": "niv_tecnico",
+      "rules": "required|integer"
+    },
+    {
+      "field": "niv_licenciatura",
+      "rules": "required|integer"
+    },
+    {
+      "field": "niv_posgrado",
+      "rules": "required|integer"
+    },
+    {
+      "field": "depto",
+      "rules": "required|integer"
+    },
+    {
+      "field": "rangoCarnet",
+      "rules": "required|integer"
+    },
+    {
+      "field": "wsPruebaBasica",
+      "rules": "required|max:200"
+    },
+    {
+      "field": "wsPruebaEspecifica",
+      "rules": "required|max:200"
+    }
+  ]
+}

@@ -1,0 +1,234 @@
+{
+  "fields": [
+    {
+      "name": "codigo_unidad_academica",
+      "type": "number"
+    },
+    {
+      "name": "codigo_extension",
+      "type": "number"
+    },
+    {
+      "name": "codigo_carrerra",
+      "type": "number"
+    },
+    {
+      "name": "codigo_nivel",
+      "type": "number"
+    },
+    {
+      "name": "estado",
+      "type": "number"
+    },
+    {
+      "name": "nombre_carrera",
+      "type": "text"
+    },
+    {
+      "name": "titulo_masculino",
+      "type": "text"
+    },
+    {
+      "name": "titulo_femenino",
+      "type": "text"
+    },
+    {
+      "name": "telefono",
+      "type": "text"
+    },
+    {
+      "name": "email",
+      "type": "email"
+    },
+    {
+      "name": "pagina_web",
+      "type": "text"
+    },
+    {
+      "name": "fecha_activacion",
+      "type": "date"
+    },
+    {
+      "name": "fecha_creacion",
+      "type": "date"
+    },
+    {
+      "name": "estado_ingreso",
+      "type": "number"
+    },
+    {
+      "name": "estado_reingreso",
+      "type": "number"
+    },
+    {
+      "name": "estado_peg",
+      "type": "number"
+    },
+    {
+      "name": "estado_graduados",
+      "type": "number"
+    },
+    {
+      "name": "requiere_cierrre",
+      "type": "number"
+    },
+    {
+      "name": "requiere_privado",
+      "type": "number"
+    },
+    {
+      "name": "requiere_publico",
+      "type": "number"
+    },
+    {
+      "name": "requiere_eps",
+      "type": "number"
+    },
+    {
+      "name": "requiere_tesis",
+      "type": "number"
+    },
+    {
+      "name": "prerequisito",
+      "type": "number"
+    },
+    {
+      "name": "descripcion",
+      "type": "text"
+    },
+    {
+      "name": "usuario",
+      "type": "text"
+    },
+    {
+      "name": "fecha_u",
+      "type": "datetime"
+    },
+    {
+      "name": "car_multiple",
+      "type": "number"
+    },
+    {
+      "name": "regimen",
+      "type": "select",
+      "options":{
+        "Semestral": "Semestral",
+        "Anual": "Anual"
+      }
+    },
+    {
+      "name": "pruebaEspecifica",
+      "type": "number"
+    }
+  ],
+  "validations": [
+    {
+      "field": "codigo_unidad_academica",
+      "rules": "required|min:0|max:255"
+    },
+    {
+      "field": "codigo_extension",
+      "rules": "required|min:0|max:255"
+    },
+    {
+      "field": "codigo_carrerra",
+      "rules": "required|min:0|max:255"
+    },
+    {
+      "field": "codigo_nivel",
+      "rules": "required|min:0|max:255"
+    },
+    {
+      "field": "estado",
+      "rules": "min:0|max:255"
+    },
+    {
+      "field": "nombre_carrera",
+      "rules": "required|max:200"
+    },
+    {
+      "field": "titulo_masculino",
+      "rules": "required|max:200"
+    },
+    {
+      "field": "titulo_femenino",
+      "rules": "required|max:200"
+    },
+    {
+      "field": "telefono",
+      "rules": "required|max:20"
+    },
+    {
+      "field": "email",
+      "rules": "required|max:50"
+    },
+    {
+      "field": "pagina_web",
+      "rules": "required|max:50"
+    },
+    {
+      "field": "fecha_activacion",
+      "rules": "required"
+    },
+    {
+      "field": "fecha_creacion",
+      "rules": "required"
+    },
+    {
+      "field": "estado_ingreso",
+      "rules": "min:0|max:255"
+    },
+    {
+      "field": "estado_reingreso",
+      "rules": "min:0|max:255"
+    },
+    {
+      "field": "estado_peg",
+      "rules": "min:0|max:255"
+    },
+    {
+      "field": "estado_graduados",
+      "rules": "min:0|max:255"
+    },
+    {
+      "field": "requiere_cierrre",
+      "rules": "min:0|max:255"
+    },
+    {
+      "field": "requiere_privado",
+      "rules": "min:0|max:255"
+    },
+    {
+      "field": "requiere_publico",
+      "rules": "min:0|max:255"
+    },
+    {
+      "field": "requiere_eps",
+      "rules": "min:0|max:255"
+    },
+    {
+      "field": "requiere_tesis",
+      "rules": "min:0|max:255"
+    },
+    {
+      "field": "prerequisito",
+      "rules": "min:0|max:255"
+    },
+    {
+      "field": "descripcion",
+      "rules": "required|max:250"
+    },
+    {
+      "field": "usuario",
+      "rules": "required|max:30"
+    },
+    {
+      "field": "car_multiple",
+      "rules": "required|min:-32768|max:32767"
+    },
+    {
+      "field": "pruebaEspecifica",
+      "rules": "required|min:0|max:255"
+    }
+  ]
+}

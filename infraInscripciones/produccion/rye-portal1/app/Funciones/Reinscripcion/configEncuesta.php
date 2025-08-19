@@ -1,0 +1,11 @@
+<?php
+    define('ENCUESTA_PRIMER_INGRESO_TABLA','lime_tokens_778893');
+    //define('ENCUESTA_PRIMER_INGRESO_HOST','192.168.2.31');
+    define('ENCUESTA_PRIMER_INGRESO_HOST','db_encuesta');
+    define('ENCUESTA_PRIMER_INGRESO_DB','encuestas');
+    define('ENCUESTA_PRIMER_INGRESO_USER','limesurvey');
+    //define('ENCUESTA_PRIMER_INGRESO_PWD','3st4d20!3');
+    define('ENCUESTA_PRIMER_INGRESO_PWD','123456');
+    define('ENCUESTA_PRIMER_INGRESO_PORT','5432');
+    define('ENCUESTA_REINGRESO_TABLA','lime_tokens_778893');
+?>

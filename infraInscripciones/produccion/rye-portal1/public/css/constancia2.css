@@ -1,0 +1,16 @@
+@charset "utf-8";
+@page {
+    size: 8.5in	5.5in;
+    margin: 0px;
+}
+
+table {
+    width: 100%;
+    margin-top: 25px;
+    font-size: 16px;
+}
+
+td, th{
+    padding-bottom: 0px;
+    padding-top: 0px;
+}

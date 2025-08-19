@@ -1,0 +1,30 @@
+{
+  "fields": [
+    {
+      "name": "tipo",
+      "type": "number"
+    },
+    {
+      "name": "descripcion",
+      "type": "text"
+    },
+    {
+      "name": "prioridad",
+      "type": "text"
+    }
+  ],
+  "validations": [
+    {
+      "field": "tipo",
+      "rules": "required|integer"
+    },
+    {
+      "field": "descripcion",
+      "rules": "required|max:30"
+    },
+    {
+      "field": "prioridad",
+      "rules": "required|max:1"
+    }
+  ]
+}

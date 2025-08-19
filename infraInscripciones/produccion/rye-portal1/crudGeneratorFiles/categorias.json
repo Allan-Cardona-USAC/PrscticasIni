@@ -1,0 +1,42 @@
+{
+  "fields": [
+    {
+      "name": "idCategoria",
+      "type": "number"
+    },
+    {
+      "name": "nombre",
+      "type": "text"
+    },
+    {
+      "name": "fechaCreacion",
+      "type": "datetime"
+    },
+    {
+      "name": "fechaModificacion",
+      "type": "datetime"
+    },
+    {
+      "name": "estado",
+      "type": "number"
+    }
+  ],
+  "validations": [
+    {
+      "field": "idCategoria",
+      "rules": "required|integer"
+    },
+    {
+      "field": "nombre",
+      "rules": "required|max:50"
+    },
+    {
+      "field": "fechaCreacion",
+      "rules": "required"
+    },
+    {
+      "field": "estado",
+      "rules": "required|integer"
+    }
+  ]
+}

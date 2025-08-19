@@ -1,0 +1,1 @@
+Para verificar tu usuario haz click <a href="{{route('aspirante.verify',["nov" => $user['nov'], "verification_token" => $user['verification_token']])}}">aquí</a>

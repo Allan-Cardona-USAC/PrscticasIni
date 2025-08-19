@@ -1,0 +1,165 @@
+{
+  "fields": [
+    {
+      "name": "idsolicitud",
+      "type": "number"
+    },
+    {
+      "name": "tipo",
+      "type": "text"
+    },
+    {
+      "name": "CUI",
+      "type": "number"
+    },
+    {
+      "name": "nombre",
+      "type": "text"
+    },
+    {
+      "name": "apellidos",
+      "type": "text"
+    },
+    {
+      "name": "fecha",
+      "type": "date"
+    },
+    {
+      "name": "correo_institucional",
+      "type": "email"
+    },
+    {
+      "name": "correo_personal",
+      "type": "email"
+    },
+    {
+      "name": "telefono_cel",
+      "type": "number"
+    },
+    {
+      "name": "telefono_trabajo",
+      "type": "number"
+    },
+    {
+      "name": "telefono_casa",
+      "type": "number"
+    },
+    {
+      "name": "registro_personal",
+      "type": "number"
+    },
+    {
+      "name": "institucion",
+      "type": "text"
+    },
+    {
+      "name": "autoridad_responsable",
+      "type": "text"
+    },
+    {
+      "name": "puesto",
+      "type": "text"
+    },
+    {
+      "name": "copia_dpi",
+      "type": "file"
+    },
+    {
+      "name": "copia_oficio",
+      "type": "file"
+    },
+    {
+      "name": "estado_idestado",
+      "type": "number"
+    }
+  ],
+  "foreign_keys": [
+    {
+      "column": "estado_idestado",
+      "references": "idestado",
+      "on": "estadoSolicitud",
+      "onDelete": "no action"
+    }
+  ],
+  "relationships": [
+    {
+      "name": "EstadoSolicitud",
+      "type": "belongsTo",
+      "class": "App\\EstadoSolicitud"
+    }
+  ],
+  "validations": [
+    {
+      "field": "idsolicitud",
+      "rules": "integer"
+    },
+    {
+      "field": "tipo",
+      "rules": "required|max:1"
+    },
+    {
+      "field": "CUI",
+      "rules": "required|max:13"
+    },
+    {
+      "field": "nombre",
+      "rules": "required|max:45"
+    },
+    {
+      "field": "apellidos",
+      "rules": "required|max:45"
+    },
+    {
+      "field": "fecha",
+      "rules": "date_format:\"d-m-Y\""
+    },
+    {
+      "field": "correo_institucional",
+      "rules": "email"
+    },
+    {
+      "field": "correo_personal",
+      "rules": "required|email"
+    },
+    {
+      "field": "telefono_cel",
+      "rules": "required|integer"
+    },
+    {
+      "field": "telefono_trabajo",
+      "rules": "integer"
+    },
+    {
+      "field": "telefono_casa",
+      "rules": "integer"
+    },
+    {
+      "field": "registro_personal",
+      "rules": "integer"
+    },
+    {
+      "field": "institucion",
+      "rules": "required|max:200"
+    },
+    {
+      "field": "autoridad_responsable",
+      "rules": "required|max:200"
+    },
+    {
+      "field": "puesto",
+      "rules": "required|max:200"
+    },
+    {
+      "field": "copia_dpi",
+      "rules": "required|max:200"
+    },
+    {
+      "field": "copia_oficio",
+      "rules": "required|max:200"
+    },
+    {
+      "field": "estado_idestado",
+      "rules": "integer"
+    }
+  ]
+}

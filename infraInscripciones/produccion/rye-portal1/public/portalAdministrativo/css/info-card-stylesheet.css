@@ -1,0 +1,60 @@
+.info-card-a {
+    height: 40vh;
+    text-align:center;
+    background: #fff;/*#d8d8d8; 0F2949; 328cc1*/
+    padding:15px;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+
+.info-card-b {
+    height: 40vh;
+    text-align:center;
+    background: #fff;/*#bcbcbc; 0b3c5d*/
+    padding:15px;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+.info-card-c {
+    height: 40vh;
+    text-align:center;
+    background: #fff;/*#adadad; 0b3c5d*/
+    padding:15px;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+
+.info-card-a:hover, .info-card-a:focus, .info-card-a:active,
+.info-card-b:hover, .info-card-b:focus, .info-card-b:active,
+.info-card-c:hover, .info-card-c:focus, .info-card-c:active{
+    background-color: #0b3c5d;
+    color: #fff;
+}
+
+.info-card-a a,.info-card-b a, .info-card-c a{
+    color:#000;
+    text-decoration: none;
+}
+
+.info-card-a:hover a, .info-card-a:focus a, .info-card-a:active a,
+.info-card-b:hover a, .info-card-b:focus a, .info-card-b:active a,
+.info-card-c:hover a, .info-card-c:focus a, .info-card-c:active a{
+    color: #fff;
+    text-decoration: none;
+}
+
+.info-card-a span, .info-card-b span, .info-card-c span{
+    font-size:3vh;
+    text-transform: uppercase;
+}
+
+
+.info-card-a img, .info-card-b img, .info-card-c img{
+    height:15vh;
+}
+
+.center-content{
+    position: relative;
+    top: 45%;
+    transform: translateY(-45%); 
+}

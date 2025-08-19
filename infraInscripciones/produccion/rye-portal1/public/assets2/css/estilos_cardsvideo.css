@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+section, .section-b {
+    position: relative;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+  }
+
+section, .section-b1 {
+    position: relative;
+    padding-top: 9rem;
+    padding-bottom: 3rem;
+  }
+
+.titleInscripcion .title{
+    position: relative;
+    top: -70px;
+    font-size: 2.5em;
+    display: flex;
+    justify-content: center;
+}
+
+.titleInscripcion .linearTitle{
+    position: relative;
+    top: -70px;
+    margin: auto;
+    width: 80%;
+}
+
+.containerInscripcionTuto {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 30px;
+    gap: 120px;
+}
+.containerInscripcionTuto .card {
+    position: relative;
+    max-width: 300px;
+    height: 215px;
+    background-color: #FFF;
+    margin: 30px 10px;
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 5px 202px rgba(0,0,0,0,5);
+    transition: 0.3s ease-in-out;
+    filter: drop-shadow(0 0 0.7rem #0f2949);
+}
+.containerInscripcionTuto .card:hover {
+    height: 420px;
+}
+.containerInscripcionTuto .card .imgBx {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    top: -130px;
+    left: 5px;
+    z-index: 1;
+    /*box-shadow: 0 5px 20px rgba(0,0,0,0,5);*/
+}
+.containerInscripcionTuto .card .imgBx img {
+    max-width: 100%;
+    border-radius: 4px;
+}
+.containerInscripcionTuto .card .content {
+    position: relative;
+    margin-top: -140px;
+    padding: 10px 15px;
+    top: -70px;
+    text-align: center;
+    color: #111;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s ease-in-out;
+    min-height: 215px;
+}
+.containerInscripcionTuto .card:hover .content {
+    visibility: visible;
+    opacity: 1;
+    margin-top: -40px;
+    transition-delay: 0.3s;
+    padding: -8000px;
+    margin-bottom: -100px;
+}
+
+.containerInscripcionTuto .card .play-button{
+    position: relative;
+    top: -190px;
+    transition: 0.3s ease-in-out;
+    display: flex;
+    justify-content: center;
+}
+
+.containerInscripcionTuto .card .play-button-cont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.containerInscripcionTuto .card:hover .play-button{
+    position: relative;
+    transition: 0.3s ease-in-out;
+    top: 20px;
+}
+
+
+@media (min-width: 200px) and (max-width: 800px) {
+
+    .titleInscripcion .title{
+        position: relative;
+        top: -70px;
+        font-size: 1em;
+        display: flex;
+        justify-content: center;
+    }
+
+}

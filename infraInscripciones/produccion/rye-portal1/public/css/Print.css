@@ -1,0 +1,11 @@
+@media print
+{
+    @page {
+        margin-top: 1.3cm;
+    }
+
+    div, card{
+        page-break-after: avoid;
+    }
+
+}

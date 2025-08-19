@@ -1,0 +1,50 @@
+@charset "utf-8";
+@page {
+    size: 8.5in	5.5in;
+    margin: 0;
+}
+
+table {
+    border: 2px solid black;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 8in;
+    margin: auto;
+    margin-top: 25px;
+    font-size: 12px;
+}
+
+td, th{
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.titulo {
+    text-align: center;
+    font-weight: bolder;
+    padding-top: 2px;
+}
+
+.banco{
+    border-left: 2px solid black;
+}
+
+.titulo-seccion{
+    text-align: right;
+    padding-right: 15px;
+    width: 143px;
+}
+
+.informacion{
+    text-align: center;
+    font-size: 10px;
+}
+
+.detalle{
+    text-align: right;
+}
+
+.valor{
+    text-align: right;
+    padding-right: 20px;
+}
